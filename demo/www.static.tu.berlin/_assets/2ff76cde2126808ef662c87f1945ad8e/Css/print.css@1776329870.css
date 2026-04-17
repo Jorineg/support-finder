@@ -1,0 +1,79 @@
+/**
+ * Hide all navigations element
+ */
+.header,
+.breadcrumb,
+.social-media-share-buttons,
+.slider--nav,
+.footer .footer__claim,
+.footer .footer__content,
+.footer::before
+{
+  display: none;
+}
+
+body {
+  font-size: 11pt;
+}
+
+/** Prevent teasers, images and linkboxes to break between pages */
+.teaser, img, a {
+  page-break-inside: avoid;
+  break-inside: avoid-page;
+}
+
+.link, a {
+  text-decoration: none;
+}
+/* Display URL after links */
+a:link:after, a:visited:after {
+  content:" [" attr(href) "] ";
+  text-align: center;
+  color: gray;
+}
+
+.content {
+  margin-top: 1rem;
+}
+/* Handle content in gradients */
+.content--gradient {
+  background: none !important;
+  margin-top: auto !important;
+  padding: 0;
+  color: #000;
+}
+.content--gradient *
+{
+  color: #000 !important;
+  text-shadow: none !important;
+}
+
+/** Hide screen-only contents **/
+.frame--type-menu_section {
+  display: none
+}
+
+/** Accordion **/
+.accordionButtons {
+  display: none;
+}
+.ui-accordion-content {
+  display: block !important;
+}
+::details-content {
+  content-visibility: visible;
+}
+
+.footer .footer__additionalContent {
+  background: none;
+}
+
+.footer__permalink,
+.footer__permalink a {
+  color: gray;
+}
+
+.footer__permalink a:link:after,
+.footer__permalink a:visited:after {
+  display: none;
+}
