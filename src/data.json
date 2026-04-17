@@ -1,0 +1,414 @@
+{
+  "questions": [
+    {
+      "id": "nationality",
+      "type": "choice",
+      "question": "What is your nationality?",
+      "detail": "Your citizenship status affects which financial support programs you can access. EU/EEA citizens often have similar rights to German citizens. Non-EU citizens may need specific residence permits. For example, if you hold a German passport, choose 'German citizen'.",
+      "options": [
+        { "value": "german", "label": "German citizen" },
+        { "value": "eu", "label": "EU / EEA citizen" },
+        { "value": "non_eu", "label": "Non-EU citizen" }
+      ]
+    },
+    {
+      "id": "residence_permit",
+      "type": "yesno",
+      "question": "Do you have a permanent residence permit or a residence permit that allows employment?",
+      "detail": "This includes 'Niederlassungserlaubnis' (permanent residence), 'Aufenthaltserlaubnis' for study or work, refugee status, or subsidiary protection. Tolerated stay ('Duldung') alone usually does not qualify.",
+      "condition": { "field": "nationality", "op": "eq", "value": "non_eu" }
+    },
+    {
+      "id": "age",
+      "type": "number",
+      "question": "How old are you?",
+      "detail": "Your age is relevant for multiple programs. BAföG generally requires you to be under 45 when starting your degree. Kindergeld is available up to age 25 if you're in education. Scholarships may also have age limits.",
+      "min": 14,
+      "max": 70,
+      "unit": "years"
+    },
+    {
+      "id": "enrolled",
+      "type": "yesno",
+      "question": "Are you currently enrolled at (or planning to enroll at) a German university or Fachhochschule?",
+      "detail": "You must be enrolled full-time at a state-recognized higher education institution in Germany. This includes universities, Fachhochschulen, and some art/music academies. Dual-study programs ('duales Studium') may have different rules."
+    },
+    {
+      "id": "degree_type",
+      "type": "choice",
+      "question": "What type of degree are you pursuing?",
+      "detail": "Bachelor students typically get the longest BAföG funding. Master students can get funding if the master directly follows a bachelor. PhD students are usually not BAföG-eligible but may qualify for scholarships or stipends.",
+      "options": [
+        { "value": "bachelor", "label": "Bachelor's degree" },
+        { "value": "master", "label": "Master's degree" },
+        { "value": "phd", "label": "PhD / Doctorate" },
+        { "value": "state_exam", "label": "State examination (e.g. law, medicine)" },
+        { "value": "other", "label": "Other" }
+      ],
+      "condition": { "field": "enrolled", "op": "eq", "value": true }
+    },
+    {
+      "id": "semester",
+      "type": "number",
+      "question": "Which semester are you currently in?",
+      "detail": "BAföG is available for the standard period of study ('Regelstudienzeit'). If you exceed this, funding may stop unless you can prove valid reasons (illness, pregnancy, disability, first-time change of subject). For example, if your program has 6 semesters, you should be within that range.",
+      "min": 1,
+      "max": 20,
+      "unit": "semester",
+      "condition": { "field": "enrolled", "op": "eq", "value": true }
+    },
+    {
+      "id": "parents_income",
+      "type": "number",
+      "question": "What is your parents' combined gross annual income (before taxes)?",
+      "detail": "Enter your parents' total gross income per year in euros. This includes salary, self-employment income, rental income, and other earnings BEFORE taxes and deductions. If your parents are divorced or separated, the income of the parent you lived with most recently is most relevant. An approximate figure is fine — for example, if each parent earns about €30,000, enter 60000.",
+      "min": 0,
+      "max": 500000,
+      "unit": "€ / year"
+    },
+    {
+      "id": "own_income",
+      "type": "number",
+      "question": "What is your own monthly income (e.g. from a part-time job)?",
+      "detail": "Include income from mini-jobs, working student positions, freelance work, etc. BAföG allows you to earn up to roughly €520/month (6,240€/year) without deductions. Scholarship programs may have different thresholds. Enter 0 if you have no income.",
+      "min": 0,
+      "max": 10000,
+      "unit": "€ / month"
+    },
+    {
+      "id": "own_assets",
+      "type": "number",
+      "question": "How much do you have in savings and assets?",
+      "detail": "This includes bank accounts, stocks, bonds, real estate, valuable possessions, cryptocurrency, etc. For BAföG, the exemption limit is currently around €15,000 (higher if you have children). A car of reasonable value is usually exempt.",
+      "min": 0,
+      "max": 1000000,
+      "unit": "€"
+    },
+    {
+      "id": "parents_studied",
+      "type": "yesno",
+      "question": "Has at least one of your parents completed a degree at a German university?",
+      "detail": "Some scholarship programs specifically target 'first-generation students' — students whose parents did not attend university. If neither of your parents holds a university degree (Bachelor, Master, Diplom, Magister, Staatsexamen) from any university, you may qualify for additional support."
+    },
+    {
+      "id": "living_situation",
+      "type": "choice",
+      "question": "Where do you live during your studies?",
+      "detail": "Your living situation affects BAföG rates. Students who live with their parents receive a lower BAföG rate (around €262/month for housing) than those who live independently (around €360/month for housing). Dormitory residents count as living independently.",
+      "options": [
+        { "value": "with_parents", "label": "With my parents" },
+        { "value": "alone", "label": "Own apartment / shared flat (WG)" },
+        { "value": "dorm", "label": "Student dormitory" }
+      ]
+    },
+    {
+      "id": "has_children",
+      "type": "yesno",
+      "question": "Do you have any children?",
+      "detail": "Having children can increase your BAföG rate (childcare supplement of around €160/month per child) and raise the asset exemption limit. Some scholarships also provide family supplements."
+    },
+    {
+      "id": "disability_or_chronic",
+      "type": "yesno",
+      "question": "Do you have a disability or chronic illness that affects your studies?",
+      "detail": "Students with disabilities or chronic illnesses may qualify for extended BAföG funding beyond the standard period, hardship allowances, or additional support from disability services. This can include physical disabilities, mental health conditions, or chronic diseases."
+    },
+    {
+      "id": "political_engagement",
+      "type": "yesno",
+      "question": "Are you actively engaged in political, social, or community work?",
+      "detail": "Several major German scholarship foundations (Studienstiftung, Friedrich-Ebert-Stiftung, Konrad-Adenauer-Stiftung, etc.) value social and political engagement. This includes volunteering, party membership, union work, church involvement, community organizing, or NGO work."
+    },
+    {
+      "id": "academic_performance",
+      "type": "choice",
+      "question": "How would you describe your academic performance?",
+      "detail": "Some scholarships require excellent grades (typically 1.0–1.5 Abitur or top 5% of class). Others value good performance (1.5–2.5) combined with social engagement. Performance-based scholarships like Deutschlandstipendium typically look for above-average grades.",
+      "options": [
+        { "value": "excellent", "label": "Excellent (top of class / Abitur ≤ 1.5)" },
+        { "value": "good", "label": "Good (above average / Abitur 1.5–2.5)" },
+        { "value": "average", "label": "Average (Abitur 2.5–3.5)" },
+        { "value": "below_average", "label": "Below average (Abitur > 3.5)" }
+      ]
+    },
+    {
+      "id": "religious_affiliation",
+      "type": "choice",
+      "question": "Do you have a religious affiliation?",
+      "detail": "Some scholarship foundations are affiliated with religious organizations — for example, the Cusanuswerk (Catholic), Evangelisches Studienwerk Villigst (Protestant), or Avicenna (Muslim). Affiliation is usually a requirement, but some also accept applicants who share the foundation's values.",
+      "options": [
+        { "value": "catholic", "label": "Catholic" },
+        { "value": "protestant", "label": "Protestant" },
+        { "value": "muslim", "label": "Muslim" },
+        { "value": "jewish", "label": "Jewish" },
+        { "value": "other", "label": "Other" },
+        { "value": "none", "label": "None / prefer not to say" }
+      ]
+    },
+    {
+      "id": "migration_background",
+      "type": "yesno",
+      "question": "Do you or your parents have a migration background?",
+      "detail": "Some programs specifically support students with a migration background — meaning you or at least one parent was not born with German citizenship. Examples include scholarships from the Heinrich Böll Foundation, START Foundation, or specific university programs."
+    }
+  ],
+
+  "support_options": [
+    {
+      "id": "bafoeg",
+      "name": "BAföG",
+      "fullName": "Bundesausbildungsförderungsgesetz",
+      "description": "The main government student funding program. Provides monthly payments (currently up to ~€934/month) of which 50% is a grant and 50% is an interest-free loan (capped at €10,010 repayment).",
+      "url": "https://www.bafög.de",
+      "maxAmount": "Up to €934/month",
+      "type": "Grant + Loan",
+      "rules": [
+        { "field": "nationality", "op": "in", "value": ["german", "eu"] },
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "age", "op": "lt", "value": 45 },
+        { "field": "parents_income", "op": "lt", "value": 75000 },
+        { "field": "own_assets", "op": "lt", "value": 15000 },
+        { "field": "degree_type", "op": "in", "value": ["bachelor", "master", "state_exam"] }
+      ]
+    },
+    {
+      "id": "bafoeg_non_eu",
+      "name": "BAföG (Non-EU with permit)",
+      "fullName": "BAföG for Non-EU citizens with qualifying residence permit",
+      "description": "Non-EU citizens with certain residence permits (e.g. permanent residence, refugee status, or residence permit held for 15+ months) can also receive BAföG under the same conditions.",
+      "url": "https://www.bafög.de",
+      "maxAmount": "Up to €934/month",
+      "type": "Grant + Loan",
+      "rules": [
+        { "field": "nationality", "op": "eq", "value": "non_eu" },
+        { "field": "residence_permit", "op": "eq", "value": true },
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "age", "op": "lt", "value": 45 },
+        { "field": "parents_income", "op": "lt", "value": 75000 },
+        { "field": "own_assets", "op": "lt", "value": 15000 },
+        { "field": "degree_type", "op": "in", "value": ["bachelor", "master", "state_exam"] }
+      ]
+    },
+    {
+      "id": "deutschlandstipendium",
+      "name": "Deutschlandstipendium",
+      "fullName": "Germany Scholarship (Deutschlandstipendium)",
+      "description": "A merit-based scholarship of €300/month (€150 from the government, €150 from private sponsors). Open to all nationalities. Considers grades, social engagement, and overcoming obstacles.",
+      "url": "https://www.deutschlandstipendium.de",
+      "maxAmount": "€300/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "in", "value": ["excellent", "good"] }
+      ]
+    },
+    {
+      "id": "studienstiftung",
+      "name": "Studienstiftung des deutschen Volkes",
+      "fullName": "German Academic Scholarship Foundation",
+      "description": "Germany's largest and most prestigious scholarship foundation. Provides up to €1,148/month (income-dependent base amount + €300 book stipend). Requires outstanding academic achievement and broad interests.",
+      "url": "https://www.studienstiftung.de",
+      "maxAmount": "Up to €1,148/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "eq", "value": "excellent" },
+        { "field": "nationality", "op": "in", "value": ["german", "eu"] }
+      ]
+    },
+    {
+      "id": "friedrich_ebert",
+      "name": "Friedrich-Ebert-Stiftung",
+      "fullName": "Friedrich Ebert Foundation Scholarship",
+      "description": "Affiliated with the SPD (Social Democrats). Supports students with good grades and strong social/political engagement. Provides BAföG-equivalent funding + €300 book stipend. Particularly encourages first-generation students.",
+      "url": "https://www.fes.de/studienfoerderung",
+      "maxAmount": "Up to ~€1,148/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "in", "value": ["excellent", "good"] },
+        { "field": "political_engagement", "op": "eq", "value": true }
+      ]
+    },
+    {
+      "id": "konrad_adenauer",
+      "name": "Konrad-Adenauer-Stiftung",
+      "fullName": "Konrad Adenauer Foundation Scholarship",
+      "description": "Affiliated with the CDU (Christian Democrats). Supports students with above-average grades and engagement in politics, church, or social work. Provides BAföG-equivalent funding + €300 book stipend.",
+      "url": "https://www.kas.de/studienfoerderung",
+      "maxAmount": "Up to ~€1,148/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "in", "value": ["excellent", "good"] },
+        { "field": "political_engagement", "op": "eq", "value": true }
+      ]
+    },
+    {
+      "id": "boell",
+      "name": "Heinrich-Böll-Stiftung",
+      "fullName": "Heinrich Böll Foundation Scholarship",
+      "description": "Affiliated with the Green Party. Supports students engaged in ecology, sustainability, democracy, and human rights. Values diversity and explicitly welcomes students with migration backgrounds.",
+      "url": "https://www.boell.de/studienwerk",
+      "maxAmount": "Up to ~€1,148/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "in", "value": ["excellent", "good"] },
+        { "field": "political_engagement", "op": "eq", "value": true }
+      ]
+    },
+    {
+      "id": "rosa_luxemburg",
+      "name": "Rosa-Luxemburg-Stiftung",
+      "fullName": "Rosa Luxemburg Foundation Scholarship",
+      "description": "Affiliated with Die Linke (The Left Party). Supports students with strong social engagement and interest in social justice, anti-discrimination, and peace. Open to all nationalities.",
+      "url": "https://www.rosalux.de/studienwerk",
+      "maxAmount": "Up to ~€1,148/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "in", "value": ["excellent", "good"] },
+        { "field": "political_engagement", "op": "eq", "value": true }
+      ]
+    },
+    {
+      "id": "cusanuswerk",
+      "name": "Cusanuswerk",
+      "fullName": "Cusanuswerk – Catholic Scholarship Foundation",
+      "description": "Supports Catholic students with excellent academic records. Provides BAföG-equivalent funding + €300 book stipend, plus an extensive educational program and mentoring network.",
+      "url": "https://www.cusanuswerk.de",
+      "maxAmount": "Up to ~€1,148/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "in", "value": ["excellent", "good"] },
+        { "field": "religious_affiliation", "op": "eq", "value": "catholic" }
+      ]
+    },
+    {
+      "id": "evangelisches_studienwerk",
+      "name": "Evangelisches Studienwerk Villigst",
+      "fullName": "Protestant Scholarship Foundation Villigst",
+      "description": "Supports Protestant students with strong academics and social engagement. Provides BAföG-equivalent funding + €300 book stipend, interdisciplinary study programs, and a strong alumni network.",
+      "url": "https://www.evstudienwerk.de",
+      "maxAmount": "Up to ~€1,148/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "in", "value": ["excellent", "good"] },
+        { "field": "religious_affiliation", "op": "eq", "value": "protestant" }
+      ]
+    },
+    {
+      "id": "avicenna",
+      "name": "Avicenna Studienwerk",
+      "fullName": "Avicenna Foundation for Muslim Students",
+      "description": "Germany's youngest scholarship foundation, supporting Muslim students with academic talent and social engagement. Provides BAföG-equivalent funding + €300 book stipend.",
+      "url": "https://www.avicenna-studienwerk.de",
+      "maxAmount": "Up to ~€1,148/month",
+      "type": "Scholarship (no repayment)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "academic_performance", "op": "in", "value": ["excellent", "good"] },
+        { "field": "religious_affiliation", "op": "eq", "value": "muslim" }
+      ]
+    },
+    {
+      "id": "kindergeld",
+      "name": "Kindergeld",
+      "fullName": "Child Benefit (Kindergeld)",
+      "description": "Your parents can receive Kindergeld (€250/month per child) until you turn 25, as long as you are in education or training. The money goes to your parents but is meant to support you. Many families pass it on directly.",
+      "url": "https://www.arbeitsagentur.de/familie-und-kinder/kindergeld",
+      "maxAmount": "€250/month",
+      "type": "Government benefit",
+      "rules": [
+        { "field": "age", "op": "lt", "value": 25 },
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "nationality", "op": "in", "value": ["german", "eu"] }
+      ]
+    },
+    {
+      "id": "wohngeld",
+      "name": "Wohngeld",
+      "fullName": "Housing Allowance (Wohngeld)",
+      "description": "A government housing subsidy for people with low income. Students are generally only eligible if they are NOT eligible for BAföG (e.g. exceeding the standard study period) or if they live with non-students. Amount depends on income, rent, and household size.",
+      "url": "https://www.bmwsb.bund.de/Webs/BMWSB/DE/themen/stadt-wohnen/wohnraumfoerderung/wohngeld/wohngeld-node.html",
+      "maxAmount": "Varies (avg. ~€200–370/month)",
+      "type": "Government benefit",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "living_situation", "op": "in", "value": ["alone", "dorm"] },
+        { "field": "own_income", "op": "lt", "value": 1500 }
+      ]
+    },
+    {
+      "id": "bildungskredit",
+      "name": "Bildungskredit",
+      "fullName": "Education Loan (Bildungskredit)",
+      "description": "A low-interest government loan (via KfW) for students in advanced stages of their studies (usually from semester 3 onwards). Provides up to €300/month for up to 24 months. Can be combined with BAföG.",
+      "url": "https://www.bva.bund.de/DE/Services/Buerger/Schule-Ausbildung-Studium/Bildungskredit/bildungskredit_node.html",
+      "maxAmount": "Up to €300/month (max 24 months)",
+      "type": "Low-interest loan",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "semester", "op": "gte", "value": 3 },
+        { "field": "age", "op": "lt", "value": 36 }
+      ]
+    },
+    {
+      "id": "kfw_studienkredit",
+      "name": "KfW-Studienkredit",
+      "fullName": "KfW Student Loan",
+      "description": "A flexible student loan from the government-owned KfW bank. Provides up to €650/month regardless of income or parental wealth. Available to all enrolled students aged 18–44. Note: interest rates apply and the full amount must be repaid.",
+      "url": "https://www.kfw.de/inlandsfoerderung/Privatpersonen/Studieren-Qualifizieren/KfW-Studienkredit/",
+      "maxAmount": "Up to €650/month",
+      "type": "Loan (with interest)",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "age", "op": "gte", "value": 18 },
+        { "field": "age", "op": "lt", "value": 45 },
+        { "field": "nationality", "op": "in", "value": ["german", "eu"] }
+      ]
+    },
+    {
+      "id": "first_gen_programs",
+      "name": "First-Generation Student Programs",
+      "fullName": "Support Programs for First-Generation Students",
+      "description": "Various programs (ArbeiterKind.de, university-specific mentoring) support students who are the first in their family to attend university. These provide mentoring, networking, guidance on financing, and sometimes small grants.",
+      "url": "https://www.arbeiterkind.de",
+      "maxAmount": "Mentoring + networking (some grants available)",
+      "type": "Mentoring & support",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "parents_studied", "op": "eq", "value": false }
+      ]
+    },
+    {
+      "id": "disability_support",
+      "name": "Disability & Chronic Illness Support",
+      "fullName": "Nachteilsausgleich and additional support for students with disabilities",
+      "description": "Students with disabilities or chronic illnesses can receive extended BAföG funding, exam accommodations (Nachteilsausgleich), assistive technology, personal assistance, and hardship grants from student unions (Studentenwerk).",
+      "url": "https://www.studentenwerke.de/de/behinderung",
+      "maxAmount": "Varies",
+      "type": "Various support measures",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "disability_or_chronic", "op": "eq", "value": true }
+      ]
+    },
+    {
+      "id": "migration_scholarships",
+      "name": "Migration Background Scholarships",
+      "fullName": "Scholarships for students with migration background",
+      "description": "Several programs specifically target students with migration backgrounds, including the Heinrich Böll Foundation's priority for diversity, university-specific programs, and organizations like the German Academic Exchange Service (DAAD).",
+      "url": "https://www.daad.de",
+      "maxAmount": "Varies by program",
+      "type": "Scholarship",
+      "rules": [
+        { "field": "enrolled", "op": "eq", "value": true },
+        { "field": "migration_background", "op": "eq", "value": true }
+      ]
+    }
+  ]
+}
